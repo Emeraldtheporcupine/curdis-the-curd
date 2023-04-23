@@ -1,10 +1,91 @@
 namespace SpriteKind {
     export const Title = SpriteKind.create()
     export const Seasaw = SpriteKind.create()
+    export const Spring = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Spring, function (sprite, otherSprite) {
+    animation.runImageAnimation(
+    otherSprite,
+    [img`
+        . . . . . . . . . . . . 
+        . . . . b b b b . . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . b 4 4 4 4 4 4 b . . 
+        . b 4 4 4 4 4 4 4 4 b . 
+        . b 4 4 b b b b 4 4 b . 
+        b 4 4 b 2 2 2 2 b 4 4 b 
+        b b b 2 2 2 2 2 2 b b b 
+        . . . d d d d d d . . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        . . d d d d d d d d . . 
+        . . . d d d d d d . . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        `,img`
+        . . . . b b b b . . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . b 4 4 4 4 4 4 b . . 
+        . b 4 4 4 4 4 4 4 4 b . 
+        . b 4 4 b b b b 4 4 b . 
+        b 4 4 b 2 2 2 2 b 4 4 b 
+        b b b 2 2 2 2 2 2 b b b 
+        . . . . . . . . . . . . 
+        . . . d d d d d d . . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        . . d d d d d d d d . . 
+        . . . d d d d d d . . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        `,img`
+        . . . . . . . . . . . . 
+        . . . . b b b b . . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . b 4 4 4 4 4 4 b . . 
+        . b 4 4 4 4 4 4 4 4 b . 
+        . b 4 4 b b b b 4 4 b . 
+        b 4 4 b 2 2 2 2 b 4 4 b 
+        b b b 2 2 2 2 2 2 b b b 
+        . . . d d d d d d . . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        . . d d d d d d d d . . 
+        . . . d d d d d d . . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        `,img`
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . b b b b . . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . b 4 4 4 4 4 4 b . . 
+        . b 4 4 4 4 4 4 4 4 b . 
+        . b 4 4 b b b b 4 4 b . 
+        b 4 4 b 2 2 2 2 b 4 4 b 
+        b b b 2 2 2 2 2 2 b b b 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        `],
+    100,
+    false
+    )
+    if (Curdis.vy == 0) {
+        Curdis.vy = -175
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (TitleScreen == 1) {
         TitleScreen = 0
+        LeapOfFaith = 0
         music.stopAllSounds()
         sprites.destroy(CurdisTitle, effects.none, 0)
         FrenchFry = sprites.create(img`
@@ -724,6 +805,11 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile66`, function (sprite, location) {
+    LeapOfFaith = 1
+    game.splash("Food Tray:", "Completed")
+    game.splash("Leap of Faith:", "Incompleted")
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile35`, function (sprite, location) {
     game.splash("Cashier Desk:", "Completed")
     scene.setBackgroundImage(img`
@@ -829,14 +915,14 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile35`, function (sprite, 
         6666eeeeeeeeeeeee8eeeeeee88eeeeeeeeeeeeeeeeeecccccc6666666666666666666666666666666666666666666666644444444444444444444444444444444466666666667777777777777776666
         6666eeeeeeeeeeee8eeeeeeeee88eeeeeeeeeeeeeeeeecccccc666666666666666666666666666666666666666666666666244444444444444444444444444444446666666667777777777777fff7ff6
         6666eeeeeeeeeeee8eee8eeeeeee88eeeeeeeeeeeeeeccccccc66666666666666666666666666666666fffffffffffffffffffffffffffffffffffffffffffffff4ffffffffffff7777ffffffffffff6
-        6666eeeeeeeeeeee8eee8888e8888e8eeeeeeeeeeeeeccccccc66666666666666666666666666666666fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66
-        6666eeeeeeeeeeee8eee8e88e8ee8e8eeeeeeeeeeeeeccccccc666666666666666666666662222266666fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff666
-        666888eeeeeeeeee8eeee88ee8888e8eeeeeeeeeeee88cccccc666666666666666666662222222222226ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6666
-        666ee8888eeeeeee8eeeeeeeeeeeee8eeeeeeeee8888ccccccc6666666666666666bbb2222222222bb2bbbbbbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6666
-        666eeeeee888eeeee8eeeee8eeeeee8eeeeeeee8eeeeccccccc6666666666666666bbbbbbbbbbbbbbbbbbbbbbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff666666
-        666eeeeeeeee88eeee88eee88ee8888eeeee888eeeeeccccccc6666666666666666bbbbbbbbbbbbbbbbbbbbbbffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6666666
-        666eeeeeeeeeee88ee88eee8e8888eeeee88eeeeeeeeccccccc6666666666666666bbbbbbbbbbbbbbbbbbbbbbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66666666
-        6668888eeeeeeeee888eeeee8ee88e8888eeeee888888cccccc6666666666666666bbbbbbbbbbbbbbbbbbbbbbffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff666666666
+        6666eeeeeeeeeeee8eee8888e8888e8eeeeeeeeeeeeeccccaac66666666666666666666666666666666fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66
+        6666eeeeeeeeeeee8eee8e88e8ee8e8eeeeeeeeeeeeecccaaac666666666666666666666662222266666fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff666
+        666888eeeeeeeeee8eeee88ee8888e8eeeeeeeeeeee88aaacaa666666666666666666662222222222226ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6666
+        666ee8888eeeeeee8eeeeeeeeeeeee8eeeeeeeee8888cccccca6666666666666666bbb2222222222bb2bbbbbbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6666
+        666eeeeee888eeeee8eeeee8eeeeee8eeeeeeee8eeeecccccca6666666666666666bbbbbbbbbbbbbbbbbbbbbbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff666666
+        666eeeeeeeee88eeee88eee88ee8888eeeee888eeeeecccccca6666666666666666bbbbbbbbbbbbbbbbbbbbbbffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6666666
+        666eeeeeeeeeee88ee88eee8e8888eeeee88eeeeeeeecccccaa6666666666666666bbbbbbbbbbbbbbbbbbbbbbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66666666
+        6668888eeeeeeeee888eeeee8ee88e8888eeeee88888aaaaaac6666666666666666bbbbbbbbbbbbbbbbbbbbbbffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff666666666
         666eeee8888eeeeeee8eeeee8ee888eeeeee8888eeeeccccccc66666666666666666bbbbbbbbbbbbbbbbbbbbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff666666666
         666eeeeeeee888eeee8eeeee88888eeeee888eeeeeeeccccccc66666666666666666bbbbbbbbbbbbbbbbbbbbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66666666666
         866eeeeeeeeeee8888eeeeeeeeee888888eeeeeeeeeeccccccc66666666666666666bbbbbbbbbbbbbbbbbbbbffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff666666666668
@@ -849,15 +935,59 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile35`, function (sprite, 
         8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         `)
     game.splash("Food Tray:", "Incompleted")
+    tiles.setCurrentTilemap(tilemap`level4`)
     tiles.placeOnTile(sprite, tiles.getTileLocation(0, 18))
+    Spring = sprites.create(img`
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . b b b b . . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . b 4 4 4 4 4 4 b . . 
+        . b 4 4 4 4 4 4 4 4 b . 
+        . b 4 4 b b b b 4 4 b . 
+        b 4 4 b 2 2 2 2 b 4 4 b 
+        b b b 2 2 2 2 2 2 b b b 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        `, SpriteKind.Spring)
+    Spring2 = sprites.create(img`
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . . . . . . . . . 
+        . . . . b b b b . . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . . b 4 4 4 4 b . . . 
+        . . b 4 4 4 4 4 4 b . . 
+        . b 4 4 4 4 4 4 4 4 b . 
+        . b 4 4 b b b b 4 4 b . 
+        b 4 4 b 2 2 2 2 b 4 4 b 
+        b b b 2 2 2 2 2 2 b b b 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        . . . d d d d d d . . . 
+        . . d d d d d d d d . . 
+        `, SpriteKind.Spring)
+    tiles.placeOnTile(Spring, tiles.getTileLocation(25, 18))
+    tiles.placeOnTile(Spring2, tiles.getTileLocation(8, 10))
+    tiles.placeOnTile(SpoonSeasaw, tiles.getTileLocation(8, 16))
 })
+let Spring2: Sprite = null
+let Spring: Sprite = null
 let HitWall = 0
 let FrenchFry: Sprite = null
 let CurdisTitle: Sprite = null
 let SpoonSeasaw: Sprite = null
 let Curdis: Sprite = null
+let LeapOfFaith = 0
 let TitleScreen = 0
 TitleScreen = 1
+LeapOfFaith = 0
 Curdis = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -1067,3 +1197,8 @@ CurdisTitle = sprites.create(img`
     ......55................................555555..
     .........................................555....
     `, SpriteKind.Title)
+forever(function () {
+    if (LeapOfFaith == 1) {
+    	
+    }
+})
